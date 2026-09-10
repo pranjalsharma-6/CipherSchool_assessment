@@ -39,7 +39,7 @@ The header badge switches from `offline reviewer` to the model id. To persist at
 ### Tests
 
 ```bash
-npm test        # 52 tests
+npm test        # 85 tests
 npm run typecheck
 ```
 
@@ -88,6 +88,8 @@ Each item is tagged `rule` or `reviewer` on screen. Requirement coverage shows t
 ### 3. Rules ask rather than assert
 
 No check says a concept is missing. It says nothing was *detected* that owns it, and asks whether that was deliberate — with a score floor, so departing from the reference costs some marks and never all of them.
+
+Concepts are graded three ways rather than two: **dedicated** (a type is named for it), **folded** (it exists only as a method on another class — half credit and a question), or **absent**. Full credit for folding it in would let name-dropping score as well as modelling; no credit would assert that one decomposition is the only right one.
 
 ---
 
@@ -156,16 +158,18 @@ The grading key — requirement signals, reference concepts, pitfalls — never 
 
 ## Tests
 
-52 tests, ~1s, no external services.
+85 tests, ~1.5s, no external services.
 
 | File | Covers |
 | --- | --- |
 | `attempt-lifecycle.test.ts` | State machine: happy path, illegal transitions, retry budget, and that a rejected submission leaves the attempt editable |
-| `evaluation-pipeline.test.ts` | Strong vs weak scoring separation, reproducibility, the rule/model blend, and four degradation paths (model down, prose instead of JSON, wrong schema, fenced JSON) |
+| `evaluation-pipeline.test.ts` | Strong vs weak scoring separation, that the weak design is blamed for the *right* dimensions, reproducibility, the rule/model blend, and four degradation paths (model down, prose instead of JSON, wrong schema, fenced JSON) |
 | `evaluation-worker.test.ts` | Retry with backoff, exhausting the budget into `failed`, learner-triggered re-run, redelivered jobs, previous-score context |
 | `normalizers.test.ts` | TypeScript / Java / Python parsing, Mermaid arrow direction and cardinality, unparseable input, unregistered format |
 | `scoring.test.ts` | Rubric normalisation and validation, blending, renormalising over assessed dimensions, clamping, JSON extraction edge cases |
 | `api.test.ts` | End-to-end loop, repeat attempts showing improvement, cross-learner isolation, 422/409/404 paths, running with no reviewer at all |
+| `problem-catalogue.test.ts` | Every seeded problem is completely authored, its rubric covers all six dimensions, its signals are actually matchable, and it separates a strong design from a generic one — a guard that covers each problem added later with no new fixture |
+| `signal-matching.test.ts` | Word-boundary and inflection rules, camelCase/snake_case identifier splitting, and that a dedicated type scores above the same concept folded into a god class |
 
 ---
 

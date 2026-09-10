@@ -26,13 +26,23 @@ export interface DesignCheck {
 
 export const NO_FEEDBACK: readonly Omit<FeedbackItem, 'source'>[] = [];
 
-/** Word-boundary-aware search over the flattened design text. */
+/**
+ * Word-boundary-aware search over the flattened design text.
+ *
+ * Terms of six characters or more may carry a short inflectional suffix, so
+ * `concurrent` matches "concurrently" and `reassign` matches "reassigned" —
+ * learners write the inflected form far more often than the stem. Shorter
+ * terms stay strict, because a three-character allowance on a word like `full`
+ * would start matching "fully" and "fulfilled".
+ */
 export function mentions(haystack: string, needle: string): boolean {
   const term = needle.toLowerCase().trim();
   if (!term) return false;
   if (/[^a-z0-9 ]/.test(term)) return haystack.includes(term);
-  const pattern = new RegExp(`\\b${term.replace(/\s+/g, '\\s*')}s?\\b`, 'i');
-  return pattern.test(haystack);
+
+  const body = term.replace(/\s+/g, '\\s*');
+  const suffix = term.length >= 6 ? '\\w{0,3}' : 's?';
+  return new RegExp(`\\b${body}${suffix}\\b`, 'i').test(haystack);
 }
 
 /** Returns every term from `terms` that appears in `haystack`. */

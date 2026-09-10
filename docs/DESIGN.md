@@ -90,7 +90,15 @@ Entities, relationships, operations, narrative, plus a flattened lower-case `sea
 
 Eight small, independent, synchronous rules: requirement coverage, concept coverage, responsibility distribution, relationship clarity, extensibility seams, edge-case awareness, trade-off articulation, known pitfalls. Each returns a score for one dimension, a rationale, and feedback items.
 
-**Handling "more than one valid answer" is a matter of wording and of floors.** `ConceptCoverageCheck` never says a concept is missing — it says nothing was *detected* that owns it, and asks whether that was deliberate. Its score floor is 40, so disagreeing with the reference costs some marks and never all of them. Requirement coverage, where there genuinely is a right answer, has no such floor.
+**Handling "more than one valid answer" is a matter of wording and of floors.** `ConceptCoverageCheck` never says a concept is missing — it says nothing was *detected* that owns it, and asks whether that was deliberate. It has a score floor, so disagreeing with the reference costs some marks and never all of them. Requirement coverage, where there genuinely is a right answer, has no such floor.
+
+Three refinements came out of running hand-written designs through the platform and finding the verdicts unconvincing:
+
+**Concepts are scored three ways, not two.** A concept can be *dedicated* (a type is named for it — full credit), *folded* (it appears only inside another type's members, e.g. `calculateFee()` on a god class — half credit and a question), or *absent* (no credit). Grading `folded` the same as `dedicated` let a design that merely name-drops score as well as one that models the concept; grading it the same as `absent` would assert that the reference decomposition is the only correct one. Half credit says what is actually true — the concept is present, but its ownership is unclear from the design alone.
+
+**Edge-case awareness is scored from the problem's own implied requirements**, not a global word list. Every problem authors the cases the brief deliberately omits — a full lot, two cars racing for the last spot, an equal split of 100 across three people — each with tuned signals. Those are a far sharper instrument than generic failure vocabulary, and they reward noticing the *case* rather than using a particular word. The generic vocabulary stays as a smaller secondary signal, since a design can be thoughtful in ways the problem's author did not anticipate. Reading the implied requirements here as well as in `RequirementCoverageCheck` is deliberate rather than double counting: that check asks *did you cover the brief*, this one asks *did you think past it*.
+
+**A check that finds nothing abstains rather than scoring 100.** `PitfallCheck` returns no score at all when a design walks into none of the known traps. Not falling into a handful of named pitfalls is the absence of evidence, not evidence of good abstraction, and scoring it as a perfect result quietly lifted every design's abstraction average for doing nothing.
 
 This half is the platform's **floor**: dependency-free, single-digit milliseconds, and reproducible. Whatever happens to the model, a learner who submits gets a real score with real evidence.
 

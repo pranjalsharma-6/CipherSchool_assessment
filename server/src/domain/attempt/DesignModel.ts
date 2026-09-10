@@ -72,5 +72,20 @@ export function buildSearchText(
   for (const o of model.operations) {
     parts.push(o.name, o.owner ?? '', o.description);
   }
-  return parts.join('\n').toLowerCase();
+  // Identifiers carry real signal — `onCarUnavailable` says something about the
+  // design — but lower-cased they become one blob that word-boundary matching
+  // cannot see into. So the text carries the design twice: once verbatim, so
+  // concatenated aliases like `pricingstrategy` still match, and once with
+  // identifiers split into words, so `unavailable` matches too. Both forms are
+  // needed; either alone misses signals the other finds.
+  const verbatim = parts.join('\n');
+  return `${verbatim}\n${splitIdentifiers(verbatim)}`.toLowerCase();
+}
+
+/** `onCarUnavailable` → `on Car Unavailable`; `find_spot` → `find spot`. */
+function splitIdentifiers(text: string): string {
+  return text
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+    .replace(/[_]+/g, ' ');
 }

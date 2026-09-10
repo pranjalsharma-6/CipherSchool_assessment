@@ -23,6 +23,19 @@ export class PitfallCheck implements DesignCheck {
       (p) => matchedTerms(design.searchText, p.triggers).length > 0,
     );
 
+    // Abstaining rather than scoring 100 is the important part. Not walking
+    // into a handful of known traps is not evidence of good abstraction — it is
+    // the absence of evidence, and scoring it as a perfect result would drag
+    // every design's abstraction average upwards for doing nothing at all.
+    // This check only speaks when it has actually found something.
+    if (triggered.length === 0) {
+      return {
+        score: null,
+        rationale: `None of this problem's ${problem.pitfalls.length} known pitfalls detected.`,
+        feedback: [],
+      };
+    }
+
     const feedback = triggered.map((p) => ({
       id: `pitfall-${p.id}`,
       kind: 'pitfall' as const,
@@ -32,7 +45,7 @@ export class PitfallCheck implements DesignCheck {
     }));
 
     return {
-      score: clampScore(100 - 18 * triggered.length),
+      score: clampScore(100 - 30 * triggered.length),
       rationale: `${triggered.length}/${problem.pitfalls.length} known pitfalls detected.`,
       feedback,
     };
