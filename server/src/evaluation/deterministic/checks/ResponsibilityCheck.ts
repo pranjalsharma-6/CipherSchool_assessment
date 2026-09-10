@@ -20,7 +20,7 @@ export class ResponsibilityCheck implements DesignCheck {
   readonly id = 'responsibility-distribution';
   readonly dimension = 'abstraction_quality' as const;
 
-  run({ design }: EvaluationContext): CheckResult {
+  run({ design, submission }: EvaluationContext): CheckResult {
     if (design.entities.length === 0) {
       return { score: 0, rationale: 'No classes were detected in the submission.', feedback: [] };
     }
@@ -60,7 +60,11 @@ export class ResponsibilityCheck implements DesignCheck {
 
     const described = design.entities.filter((e) => e.responsibility.trim().length >= 15);
     const describedRatio = described.length / design.entities.length;
-    if (describedRatio < 0.6 && design.entities.length >= 3) {
+    // Only the structured form has a field for a per-class responsibility.
+    // Docking a Mermaid diagram for not carrying one would be penalising the
+    // format rather than the design.
+    const formatCarriesResponsibilities = submission.format === 'structured';
+    if (formatCarriesResponsibilities && describedRatio < 0.6 && design.entities.length >= 3) {
       score -= 12;
       feedback.push({
         id: 'missing-responsibilities',
@@ -96,7 +100,9 @@ export class ResponsibilityCheck implements DesignCheck {
 
     return {
       score: clampScore(score),
-      rationale: `${design.entities.length} types; ${crowded.length} crowded; ${described.length} with a stated responsibility.`,
+      rationale: formatCarriesResponsibilities
+        ? `${design.entities.length} types; ${crowded.length} crowded; ${described.length} with a stated responsibility.`
+        : `${design.entities.length} types; ${crowded.length} crowded.`,
       feedback,
     };
   }

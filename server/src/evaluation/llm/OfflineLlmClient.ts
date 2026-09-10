@@ -21,6 +21,12 @@ export class OfflineLlmClient implements LlmClient {
     const classes = parseClasses(request.prompt);
     const relationships = parseRelationships(request.prompt);
     const notes = section(request.prompt, "### The learner's own notes on trade-offs and assumptions");
+    // The system prompt forbids repeating what the rule engine already found.
+    // The stand-in honours that too, or the demo contradicts its own design.
+    const alreadyReported = section(
+      request.prompt,
+      '## Findings already reported by the deterministic checker (do not repeat these)',
+    ).toLowerCase();
 
     const named = classes.map((c) => c.name);
     const interfaces = classes.filter((c) => c.kind === 'interface');
@@ -65,7 +71,10 @@ export class OfflineLlmClient implements LlmClient {
       });
     }
 
-    if (undocumented.length > 0) {
+    // Only the structured format has a responsibility field to leave blank.
+    const structuredFormat = request.prompt.includes('(format: structured)');
+
+    if (structuredFormat && undocumented.length > 0) {
       feedback.push({
         kind: 'suggestion',
         dimension: 'abstraction_quality',
@@ -73,7 +82,7 @@ export class OfflineLlmClient implements LlmClient {
         detail:
           'Writing the one-line job of each class is the cheapest way to find the class that is quietly doing two things. If the sentence needs an "and", the class probably needs splitting.',
       });
-    } else if (classes.length >= 3) {
+    } else if (structuredFormat && classes.length >= 3) {
       feedback.push({
         kind: 'strength',
         dimension: 'abstraction_quality',
@@ -98,6 +107,7 @@ export class OfflineLlmClient implements LlmClient {
           },
     );
 
+    const fresh = feedback.filter((item) => !overlaps(item.title, alreadyReported));
     const structureScore = score(classes.length >= 4, interfaces.length > 0, undocumented.length === 0);
     const response = {
       summary:
@@ -117,7 +127,7 @@ export class OfflineLlmClient implements LlmClient {
         { dimension: 'edge_cases', score: /invalid|error|fail|full|retry|concurren|lock/i.test(request.prompt) ? 68 : 35, rationale: 'Based on whether failure and contention paths appear in the design.' },
         { dimension: 'tradeoff_reasoning', score: Math.max(15, Math.min(85, noteWords * 2)), rationale: 'Based on the depth of the written justification.' },
       ],
-      feedback,
+      feedback: fresh,
     };
 
     return JSON.stringify(response);
@@ -184,6 +194,25 @@ function section(prompt: string, heading: string): string {
   const from = start + heading.length;
   const next = prompt.indexOf('\n#', from);
   return prompt.slice(from, next === -1 ? undefined : next).trim();
+}
+
+/**
+ * True when a draft covers the same ground as something already reported.
+ * The two evaluators word findings differently, so this compares the
+ * distinctive phrases rather than the whole title.
+ */
+function overlaps(title: string, alreadyReported: string): boolean {
+  const PHRASES = [
+    'no stated responsibility',
+    'cardinality',
+    'not connected',
+    'doing too much',
+    'reasoning',
+    'extension point',
+    'happy path',
+  ];
+  const lower = title.toLowerCase();
+  return PHRASES.some((phrase) => lower.includes(phrase) && alreadyReported.includes(phrase));
 }
 
 const score = (...conditions: boolean[]): number =>
