@@ -1,6 +1,8 @@
 # AI usage
 
-I used Claude (via Claude Code) throughout this build, mostly as a fast second opinion and a boilerplate accelerator. Below are the decisions where the AI's input actually changed the outcome: including the ones where I went against it.
+I used Claude (via Claude Code) as a pair programmer on this build. The working loop was the same every time: I decided what the thing needed to do, the AI argued a position and drafted faster than I type, and nothing stayed in the repo until I had read it and a test had run against it.
+
+That loop is why this document is mostly about disagreements. The AI is a useful second opinion precisely because it will confidently propose something reasonable-but-wrong, and the value is in catching which is which. Below are the five exchanges that actually changed the outcome, including the three where I went the other way.
 
 ---
 
@@ -68,10 +70,27 @@ The suggestion was reasonable and would have worked for three formats. It just w
 
 ---
 
-## What AI was straightforwardly good for
+## How I kept myself honest
 
-Volume, mostly. Scaffolding the Express/Vite/Vitest setup, the repetitive DTO and Zod schema mapping, the CSS design system, the first draft of the four problems' requirement signal lists (which I then edited heavily: the generated synonym sets were too narrow and missed common naming like `RateCard` for pricing), and the Mermaid arrow-parsing table, which is fiddly and exactly the kind of thing a model gets right faster than I do.
+Nothing went in on the strength of looking right. Four things in this repo exist because the verification step caught something:
 
-## Where I did not use it
+- **The `submit()` ordering bug.** A lifecycle test asserted what state an attempt is left in after a submission is *rejected*. It failed: the transition to `queued` ran before validation, so a learner whose submission was too thin would have found their work frozen in a state they could not edit. Fixed by validating first.
+- **A regex that silently shifted every capture group.** A cleanup pass collapsed `[, , generic, arrayOf, plain]` into `[, generic, arrayOf, plain]` in `CodeNormalizer`. Nothing looked wrong; two tests went red immediately and named it.
+- **Three scoring flaws, found by using my own product.** I wrote realistic designs for all four problems by hand and ran them through the platform. The verdicts were not convincing: concept coverage counted a mention as ownership, so name-dropping `calculateFee()` scored as well as modelling a `PricingStrategy`; the pitfall check returned 100 when it found nothing, quietly lifting every abstraction score; and edge-case detection used a global word list that missed designs handling the cases in their own vocabulary. All three are now fixed, and §2 below is the philosophy that came out of it.
+- **Test thresholds that were calibration, not invariants.** When retuning broke three tests, two turned out to assert arbitrary numbers. I rewrote them to assert the actual invariant (requirement coverage must equal the deterministic score when the model owns none of it) and added one asserting the weak design is blamed for the *right* dimensions, because a score that is correct by accident is not feedback.
 
-The domain model: the `Attempt` state machine, the rubric's `deterministicShare` concept, and the decision about what a learner must provide for an attempt to be meaningful. Those are the design decisions the assignment is actually asking about, and outsourcing them would have defeated the point. I used AI to pressure-test them after the fact, which is where §2 and §3 above came from.
+## The division of labour
+
+I pointed, reviewed and corrected; the AI drafted. It was quickest on work where the shape was already settled: the Express/Vite/Vitest scaffolding, the repetitive DTO and Zod schema mapping, the CSS design system, and the Mermaid arrow-parsing table, which is fiddly and exactly the kind of thing a model gets right faster than a person does.
+
+None of it landed unedited. The generated requirement signal lists were the clearest case: the synonym sets were too narrow and missed naming a real learner would reach for, like `RateCard` for pricing, so I rewrote them and then added the `problem-catalogue` test suite to stop the same narrowness creeping into any problem added later.
+
+## Where the judgement had to be mine
+
+Three calls carry this project, and no amount of drafting speed would have produced them:
+
+1. **Splitting evaluation by dimension rather than by evaluator** (§1). The rubric's `deterministicShare` is the whole design in one number: requirement coverage is 70% rules because it is a checklist, trade-off reasoning is 100% model because only a reader can judge an argument.
+2. **Treating "more than one valid design" as a scoring problem, not a prompting one** (§2). The prompt fix was the easy half; the rules had the same bias and rules are absolute, which is why concepts are graded dedicated / folded / absent with a floor.
+3. **Deciding what a learner must hand in.** The structured format exists because free prose lets someone write three fluent paragraphs while never naming a responsibility or a cardinality, which are the two things being taught. The friction is the teaching.
+
+I used the AI to attack all three after the fact, which is where §2 and §3 came from. It is a good adversary and a poor author: it will tell you a design is fine, and it will also find the hole in it if you ask it to try.
