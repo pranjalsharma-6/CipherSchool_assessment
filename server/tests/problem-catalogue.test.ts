@@ -19,7 +19,7 @@ const problems = seedProblems();
  *
  * This is a self-consistency check rather than a hand-written answer key. A
  * design that names every expected concept and speaks every requirement's
- * vocabulary is, by the checker's own definition, a good design — so if it
+ * vocabulary is, by the checker's own definition, a good design, so if it
  * scores badly, the problem's signals or concepts are misconfigured, not the
  * design. The pay-off is that this guard covers every problem added later with
  * no new fixture to write.
@@ -56,7 +56,7 @@ function idealSubmissionFor(problem: Problem): StructuredSubmission {
     })),
     tradeoffs:
       `${requirementVocabulary} I chose this decomposition because each policy that varies sits behind its own interface, ` +
-      `instead of a switch inside the core domain — a new rule becomes a new class rather than an edit. ` +
+      `instead of a switch inside the core domain: a new rule becomes a new class rather than an edit. ` +
       `The cost is one more indirection when reading the code. Concurrent access is guarded with a lock so two ` +
       `callers cannot both claim the same resource; invalid input fails fast rather than producing a bad record.`,
     assumptions: 'A single deployment. External boundaries are kept behind interfaces so the domain stays testable.',

@@ -5,7 +5,7 @@
  * submits an attempt. This interface is the seam that keeps that decision from
  * dictating the deployment: the MVP ships an in-process implementation because
  * a monolith is the right size for the problem, and moving to BullMQ or Kafka
- * later means one new adapter and one line in the container — not a change to
+ * later means one new adapter and one line in the container, not a change to
  * the worker, the services, or the attempt lifecycle.
  */
 export interface JobQueue<T> {

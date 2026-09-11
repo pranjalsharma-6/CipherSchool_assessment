@@ -34,7 +34,7 @@ const DIAGRAM_TEMPLATE = `classDiagram
 /**
  * The practice workspace.
  *
- * One page holds the whole loop — the brief on the left, the design on the
+ * One page holds the whole loop: the brief on the left, the design on the
  * right, and the review replacing the editor once it is in. Keeping it on one
  * route means "try again" does not lose the learner's place, and the feedback
  * sits next to the requirements it refers to.
@@ -219,7 +219,7 @@ export function AttemptPage() {
             </button>
           </div>
           <p className="small" style={{ marginTop: 6, marginBottom: 0 }}>
-            Your design is saved — nothing you wrote was lost.
+            Your design is saved: nothing you wrote was lost.
           </p>
         </Banner>
       )}
@@ -227,11 +227,11 @@ export function AttemptPage() {
       {attempt.pending && (
         <Banner kind="info">
           <span className="pulse">
-            <Spinner /> {attempt.status === 'queued' ? 'Queued for review…' : 'Reviewing your design…'}
+            <Spinner /> {attempt.status === 'queued' ? 'Queued for review...' : 'Reviewing your design...'}
           </span>
           <p className="small" style={{ margin: '4px 0 0' }}>
             The deterministic checks are instant; the reviewer takes a few seconds. You can leave
-            this page — the result is kept.
+            this page: the result is kept.
           </p>
         </Banner>
       )}
@@ -331,7 +331,7 @@ export function AttemptPage() {
                   onClick={submit}
                   disabled={!canSubmit}
                 >
-                  {busy ? 'Submitting…' : 'Submit for review'}
+                  {busy ? 'Submitting...' : 'Submit for review'}
                 </button>
               </div>
 
@@ -365,7 +365,7 @@ export function AttemptPage() {
                   </div>
                   <div className="field">
                     <label htmlFor="source">
-                      Classes and interfaces — signatures are enough, bodies are not graded
+                      Classes and interfaces: signatures are enough, bodies are not graded
                     </label>
                     <textarea
                       id="source"
@@ -389,7 +389,7 @@ export function AttemptPage() {
                 <Card title="Mermaid class diagram">
                   <div className="field">
                     <label htmlFor="diagram">
-                      Arrow direction and cardinality are both read — <span className="mono">*--</span>{' '}
+                      Arrow direction and cardinality are both read: <span className="mono">*--</span>{' '}
                       composition, <span className="mono">o--</span> aggregation,{' '}
                       <span className="mono">{'<|--'}</span> inheritance,{' '}
                       <span className="mono">{'..|>'}</span> implements
@@ -437,7 +437,7 @@ function TradeoffField({
   return (
     <div className="field">
       <label htmlFor="tradeoffs-alt">
-        Trade-offs — name one alternative you rejected and what it would have cost
+        Trade-offs: name one alternative you rejected and what it would have cost
       </label>
       <textarea
         id="tradeoffs-alt"

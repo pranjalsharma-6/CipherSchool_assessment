@@ -6,7 +6,7 @@ import { ValidationError } from '../../domain/shared/errors.js';
  * Turns one submission format into the shared {@link DesignModel}.
  *
  * Strategy pattern, one implementation per format. Supporting a new way to
- * submit — an image with OCR, a JSON schema export, a repo link — is a new
+ * submit (an image with OCR, a JSON schema export, a repo link) is a new
  * class registered here; no evaluator, service or route changes.
  */
 export interface SubmissionNormalizer<F extends SubmissionFormat = SubmissionFormat> {

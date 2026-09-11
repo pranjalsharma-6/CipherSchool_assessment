@@ -22,7 +22,7 @@ const SOURCE_LABEL = {
  * source that produced it, so the learner can tell a checkable fact from an
  * opinion. And requirement coverage shows the evidence that was matched, so a
  * verdict the learner disagrees with can be argued with rather than just
- * absorbed — which matters when there is more than one right answer.
+ * absorbed, which matters when there is more than one right answer.
  */
 export function FeedbackReport({
   attempt,
@@ -40,7 +40,7 @@ export function FeedbackReport({
         <Banner kind="warn">
           <strong>Partial review.</strong> The reviewer model was unavailable
           {evaluation.degradedReason ? ` (${evaluation.degradedReason})` : ''}, so this score
-          comes from the deterministic checks only — the qualitative half is missing. Your
+          comes from the deterministic checks only: the qualitative half is missing. Your
           submission is safe; re-run the evaluation to get the rest.
         </Banner>
       )}
@@ -88,7 +88,7 @@ export function FeedbackReport({
                 )}
                 {dimension.deterministicScore !== null && dimension.llmScore !== null && ' · '}
                 {dimension.llmScore !== null && <>reviewer {dimension.llmScore}</>}
-                {dimension.rationale && <> — {dimension.rationale}</>}
+                {dimension.rationale && <>: {dimension.rationale}</>}
               </div>
             </div>
           ))}
@@ -106,8 +106,8 @@ export function FeedbackReport({
                   className={`source-tag source-${item.source}`}
                   title={
                     item.source === 'deterministic'
-                      ? 'Found by a reproducible rule — it can show you its evidence'
-                      : 'A reviewer judgement — worth arguing with if you disagree'
+                      ? 'Found by a reproducible rule that can show you its evidence'
+                      : 'A reviewer judgement: worth arguing with if you disagree'
                   }
                 >
                   {SOURCE_LABEL[item.source]}
@@ -181,7 +181,7 @@ function RequirementCoverage({ evaluation }: { evaluation: Evaluation }) {
       {implied.length > 0 && (
         <>
           <div className="divider" />
-          <div className="eyebrow">Not in the brief — did you think of them?</div>
+          <div className="eyebrow">Not in the brief: did you think of them?</div>
           <div className="coverage-list">
             {implied.map((requirement) => (
               <div className="coverage-item" key={requirement.requirementId}>

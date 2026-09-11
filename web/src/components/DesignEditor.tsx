@@ -51,8 +51,8 @@ export function DesignEditor({
           <div>
             <h2>Classes &amp; interfaces</h2>
             <p className="small faint" style={{ margin: '3px 0 0' }}>
-              One line per type. The responsibility is what gets reviewed — if it needs an
-              “and”, you probably have two classes.
+              One line per type. The responsibility is what gets reviewed. If it needs an
+              "and", you probably have two classes.
             </p>
           </div>
           <button
@@ -98,7 +98,7 @@ export function DesignEditor({
                 </select>
                 <input
                   aria-label="Responsibility"
-                  placeholder="Responsible for…"
+                  placeholder="Responsible for..."
                   value={entity.responsibility}
                   disabled={disabled}
                   onChange={(e) => updateEntity(index, { responsibility: e.target.value })}
@@ -119,7 +119,7 @@ export function DesignEditor({
                 aria-label="Members"
                 className="mono"
                 style={{ marginTop: 8 }}
-                placeholder="Fields and methods, comma separated — e.g. park(vehicle), floors, pricing"
+                placeholder="Fields and methods, comma separated. For example: park(vehicle), floors, pricing"
                 value={entity.members.join(', ')}
                 disabled={disabled}
                 onChange={(e) =>
@@ -223,7 +223,7 @@ export function DesignEditor({
           ))}
           {value.relationships.length === 0 && (
             <p className="small faint">
-              A list of classes is not yet a design — add at least one relationship.
+              A list of classes is not yet a design: add at least one relationship.
             </p>
           )}
         </div>
@@ -304,7 +304,7 @@ export function DesignEditor({
           <textarea
             id="tradeoffs"
             rows={7}
-            placeholder="I put pricing behind a PricingStrategy rather than a method on Ticket because rate cards change far more often than the domain does…"
+            placeholder="I put pricing behind a PricingStrategy rather than a method on Ticket because rate cards change far more often than the domain does..."
             value={value.tradeoffs}
             disabled={disabled}
             onChange={(e) => patch({ tradeoffs: e.target.value })}
@@ -319,7 +319,7 @@ export function DesignEditor({
           <textarea
             id="assumptions"
             rows={4}
-            placeholder="A single physical lot. Payment is taken at exit through an external gateway…"
+            placeholder="A single physical lot. Payment is taken at exit through an external gateway..."
             value={value.assumptions}
             disabled={disabled}
             onChange={(e) => patch({ assumptions: e.target.value })}

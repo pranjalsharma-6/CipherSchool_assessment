@@ -136,7 +136,7 @@ describe('concept ownership', () => {
     expect(dedicated).toBeGreaterThan(folded + 15);
   });
 
-  it('does not treat a folded concept as absent — it is worth partial credit', async () => {
+  it('does not treat a folded concept as absent, it is worth partial credit', async () => {
     const folded = await abstractionScoreFor([
       { name: 'ParkingLotManager', members: ['calculateFee()', 'findSpot()', 'issueTicket()', 'processPayment()'] },
       { name: 'Car', members: ['plate'] },

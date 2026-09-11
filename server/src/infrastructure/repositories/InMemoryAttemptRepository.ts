@@ -5,7 +5,7 @@ import type { AttemptRepository } from '../../application/ports.js';
 /**
  * The default attempt store: everything a demo or a test needs, nothing to
  * install. Aggregates are copied on the way in and out so a caller holding a
- * reference cannot mutate stored state — the same isolation a real database
+ * reference cannot mutate stored state: the same isolation a real database
  * gives for free, which keeps behaviour identical across both adapters.
  */
 export class InMemoryAttemptRepository implements AttemptRepository {

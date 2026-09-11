@@ -2,7 +2,7 @@
    Design tokens
    A single dark palette with one accent. The scoring UI needs colour to mean
    something (score bands, feedback kinds), so the rest of the interface stays
-   deliberately monochrome — colour is information here, not decoration.
+   deliberately monochrome: colour is information here, not decoration.
    ------------------------------------------------------------------------- */
 :root {
   --bg: #0b0d12;

@@ -6,7 +6,7 @@ import {
   ValidationError,
 } from '../../domain/shared/errors.js';
 
-/** Maps domain errors onto status codes — the only place that knows both. */
+/** Maps domain errors onto status codes: the only place that knows both. */
 const STATUS_BY_CODE: Record<string, number> = {
   NOT_FOUND: 404,
   VALIDATION_FAILED: 422,

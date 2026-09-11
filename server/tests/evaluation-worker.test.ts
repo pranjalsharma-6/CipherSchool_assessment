@@ -78,7 +78,7 @@ describe('EvaluationWorker', () => {
 
     const evaluated = await service.get(attempt.id, LEARNER);
     // The pipeline treats the model as optional, so the first run still
-    // completes — degraded — rather than costing the learner their submission.
+    // completes, degraded, rather than costing the learner their submission.
     expect(evaluated.status).toBe('evaluated');
     expect(evaluated.evaluation?.degraded).toBe(true);
     expect(client.requests).toHaveLength(1);

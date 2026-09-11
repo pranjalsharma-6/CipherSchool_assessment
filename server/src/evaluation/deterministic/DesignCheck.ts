@@ -3,7 +3,7 @@ import type { FeedbackItem, RequirementCoverage } from '../../domain/evaluation/
 import type { EvaluationContext } from '../Evaluator.js';
 
 export interface CheckResult {
-  /** 0–100 for this check's dimension, or null to abstain. */
+  /** 0-100 for this check's dimension, or null to abstain. */
   readonly score: number | null;
   readonly rationale: string;
   readonly feedback: readonly Omit<FeedbackItem, 'source'>[];
@@ -30,7 +30,7 @@ export const NO_FEEDBACK: readonly Omit<FeedbackItem, 'source'>[] = [];
  * Word-boundary-aware search over the flattened design text.
  *
  * Terms of six characters or more may carry a short inflectional suffix, so
- * `concurrent` matches "concurrently" and `reassign` matches "reassigned" —
+ * `concurrent` matches "concurrently" and `reassign` matches "reassigned",
  * learners write the inflected form far more often than the stem. Shorter
  * terms stay strict, because a three-character allowance on a word like `full`
  * would start matching "fully" and "fulfilled".

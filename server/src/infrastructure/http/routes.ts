@@ -9,7 +9,7 @@ import { parseBody, parseSubmission } from './validation.js';
 /**
  * Identifies the learner.
  *
- * The MVP has no accounts — a header (or a fallback) stands in. It is isolated
+ * The MVP has no accounts: a header (or a fallback) stands in. It is isolated
  * in this one function precisely so that adding real auth later is a change to
  * a single line rather than to every handler: everything downstream already
  * takes a `LearnerId` and scopes its queries by it.

@@ -6,7 +6,7 @@ import type { CheckResult, DesignCheck } from '../DesignCheck.js';
  * Are the classes actually wired together, and is the wiring specific?
  *
  * The most common weak LLD answer is a correct-looking list of nouns with no
- * stated relationships — which hides exactly the decisions an interviewer wants
+ * stated relationships, which hides exactly the decisions an interviewer wants
  * to see: who owns whom, how many, and whether the link is inheritance or
  * containment. This check grades the wiring, not the nouns.
  */
@@ -34,7 +34,7 @@ export class RelationshipCheck implements DesignCheck {
             dimension: this.dimension,
             title: 'No relationships between your classes',
             detail:
-              'A list of classes is not yet a design. State who holds a reference to whom, and how many — that is where most LLD discussions actually happen.',
+              'A list of classes is not yet a design. State who holds a reference to whom, and how many, that is where most LLD discussions actually happen.',
           },
         ],
       };
@@ -74,7 +74,7 @@ export class RelationshipCheck implements DesignCheck {
         dimension: this.dimension,
         title: 'None of your relationships state cardinality',
         detail:
-          'Mark each one 1..1, 1..*, or 0..*. Getting this wrong is the single most common source of a design that cannot express a real case — one slot holding many vehicles, one order with no items.',
+          'Mark each one 1..1, 1..*, or 0..*. Getting this wrong is the single most common source of a design that cannot express a real case, one slot holding many vehicles, one order with no items.',
       });
     } else if (
       cardinalityCandidates.length > 1 &&
@@ -86,7 +86,7 @@ export class RelationshipCheck implements DesignCheck {
         kind: 'suggestion' as const,
         dimension: this.dimension,
         title: 'Cardinality is only given for some relationships',
-        detail: `${withCardinality.length} of ${cardinalityCandidates.length} associations say how many. Fill in the rest — the missing ones are usually where the modelling gets interesting.`,
+        detail: `${withCardinality.length} of ${cardinalityCandidates.length} associations say how many. Fill in the rest: the missing ones are usually where the modelling gets interesting.`,
       });
     }
 
@@ -100,7 +100,7 @@ export class RelationshipCheck implements DesignCheck {
         kind: 'question' as const,
         dimension: this.dimension,
         title: 'The design leans heavily on inheritance',
-        detail: `${hierarchical.length} inheritance or implements links across ${entities.length} types. Check whether any of them is really "has-a" — composition usually survives requirement changes better.`,
+        detail: `${hierarchical.length} inheritance or implements links across ${entities.length} types. Check whether any of them is really "has-a": composition usually survives requirement changes better.`,
       });
     }
 

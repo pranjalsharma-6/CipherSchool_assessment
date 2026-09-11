@@ -10,7 +10,7 @@ export type Difficulty = 'easy' | 'medium' | 'hard';
  * `signals` exist because there is no single correct LLD answer. A parking-lot
  * design can charge by `PricingStrategy`, `FeeCalculator` or `RateCard` and be
  * equally good, so the deterministic checker matches a *set* of synonyms and
- * reports "not detected" rather than "wrong" — it can only ever raise a
+ * reports "not detected" rather than "wrong", it can only ever raise a
  * question for the learner, never fail them outright.
  */
 export interface Requirement {
@@ -26,7 +26,7 @@ export interface Requirement {
  * A concept the reference design models as its own abstraction.
  *
  * Again keyed by aliases, and again advisory: missing one produces a prompt
- * ("nothing in your design owns pricing — was that deliberate?"), not a
+ * ("nothing in your design owns pricing: was that deliberate?"), not a
  * deduction for disagreeing with the reference.
  */
 export interface ExpectedConcept {
@@ -62,7 +62,7 @@ export interface ProblemProps {
 }
 
 /**
- * A practice problem. Immutable — problems are authored content, not something
+ * A practice problem. Immutable: problems are authored content, not something
  * the learner journey mutates, so there are no setters to reason about.
  */
 export class Problem {

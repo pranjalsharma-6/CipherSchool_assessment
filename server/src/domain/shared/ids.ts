@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
  * Branded id types.
  *
  * `AttemptId` and `ProblemId` are both strings at runtime, but the brand stops
- * the compiler from letting one be passed where the other is expected — a
+ * the compiler from letting one be passed where the other is expected: a
  * cheap way to remove a whole class of argument-order bugs in the services.
  */
 declare const brand: unique symbol;

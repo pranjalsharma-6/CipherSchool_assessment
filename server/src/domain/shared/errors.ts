@@ -36,7 +36,7 @@ export class ValidationError extends DomainError {
 }
 
 /**
- * The aggregate is in a state that forbids the requested operation —
+ * The aggregate is in a state that forbids the requested operation,
  * e.g. submitting an attempt that has already been submitted.
  */
 export class IllegalStateTransitionError extends DomainError {

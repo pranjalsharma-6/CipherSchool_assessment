@@ -5,7 +5,7 @@ import { z } from 'zod';
  * Configuration is parsed once, at startup, into a frozen object.
  *
  * Nothing below this file reads `process.env`, so every dependency a component
- * has is visible in its constructor — which is what makes the whole system
+ * has is visible in its constructor, which is what makes the whole system
  * constructible in a test with different settings and no environment juggling.
  */
 const schema = z.object({
@@ -19,10 +19,10 @@ const schema = z.object({
   ANTHROPIC_MODEL: z.string().default('claude-sonnet-5'),
 
   /**
-   * auto     — use the real model when a key is present, otherwise the offline stand-in
-   * anthropic— require the real model; fail fast at startup if no key
-   * offline  — always the offline stand-in (used by the tests and by demos)
-   * none     — no qualitative evaluator at all; every review is deterministic-only
+   * auto    : use the real model when a key is present, otherwise the offline stand-in
+   * anthropicrequire the real model; fail fast at startup if no key
+   * offline : always the offline stand-in (used by the tests and by demos)
+   * none    , no qualitative evaluator at all; every review is deterministic-only
    */
   REVIEWER_MODE: z.enum(['auto', 'anthropic', 'offline', 'none']).default('auto'),
 

@@ -11,8 +11,8 @@ const CROWDED_MEMBERS = 9;
 /**
  * Structural smells in how responsibility was distributed.
  *
- * Every rule here is a heuristic with a well-known counter-example — a
- * `PaymentService` is a perfectly good class — so each finding is phrased as a
+ * Every rule here is a heuristic with a well-known counter-example: a
+ * `PaymentService` is a perfectly good class, so each finding is phrased as a
  * prompt and the deduction is small. The point is to make the learner defend a
  * choice, not to assert that a name is wrong.
  */
@@ -54,7 +54,7 @@ export class ResponsibilityCheck implements DesignCheck {
           .map((e) => e.name)
           .join(
             ', ',
-          )} — names like these often absorb behaviour that belongs on the domain object itself. Worth checking whether ${vague[0]?.name} is hiding a real noun.`,
+          )}: names like these often absorb behaviour that belongs on the domain object itself. Worth checking whether ${vague[0]?.name} is hiding a real noun.`,
       });
     }
 
@@ -72,7 +72,7 @@ export class ResponsibilityCheck implements DesignCheck {
         dimension: this.dimension,
         title: 'Most classes have no stated responsibility',
         detail:
-          'A one-line "this class is responsible for…" per class is the fastest way to catch an overloaded abstraction before you write any code.',
+          'A one-line "this class is responsible for..." per class is the fastest way to catch an overloaded abstraction before you write any code.',
       });
     }
 

@@ -71,7 +71,7 @@ describe('ScoreAggregator', () => {
     const result = aggregator.aggregate(rubric, [deterministic([['tradeoff_reasoning', 62]])]);
     const dimension = result.dimensionScores.find((d) => d.dimension === 'tradeoff_reasoning');
 
-    // deterministicShare is 0, but with no model score the rule still counts —
+    // deterministicShare is 0, but with no model score the rule still counts,
     // otherwise a degraded run would silently score this dimension zero.
     expect(dimension?.score).toBe(62);
     expect(dimension?.llmScore).toBeNull();
@@ -88,7 +88,7 @@ describe('ScoreAggregator', () => {
     ]);
 
     expect(result.dimensionScores).toHaveLength(2);
-    // Not 80 * (2/6) — a partial assessment is scored out of what it covered.
+    // Not 80 * (2/6): a partial assessment is scored out of what it covered.
     expect(result.overallScore).toBe(80);
   });
 

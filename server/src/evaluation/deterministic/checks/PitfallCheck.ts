@@ -6,7 +6,7 @@ import { matchedTerms, type CheckResult, type DesignCheck } from '../DesignCheck
  * Problem-specific traps, authored alongside the problem itself.
  *
  * Where the other checks are general rules, this one carries the knowledge a
- * mentor has about *this* problem — "modelling a slot as a boolean" on parking
+ * mentor has about *this* problem: "modelling a slot as a boolean" on parking
  * lot, "one lift queue for the whole building" on elevator. Keeping it as data
  * on the Problem means adding a problem adds its own pitfalls, with no new code.
  */
@@ -24,7 +24,7 @@ export class PitfallCheck implements DesignCheck {
     );
 
     // Abstaining rather than scoring 100 is the important part. Not walking
-    // into a handful of known traps is not evidence of good abstraction — it is
+    // into a handful of known traps is not evidence of good abstraction, it is
     // the absence of evidence, and scoring it as a perfect result would drag
     // every design's abstraction average upwards for doing nothing at all.
     // This check only speaks when it has actually found something.

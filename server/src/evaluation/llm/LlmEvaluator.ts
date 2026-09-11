@@ -45,8 +45,8 @@ export interface LlmEvaluatorOptions {
  *
  * It is given the deterministic findings up front and told not to repeat them,
  * so the two halves compose into one review instead of two overlapping ones.
- * It judges only the dimensions where taste is required — how good the
- * abstractions are, whether the reasoning holds — and never re-litigates
+ * It judges only the dimensions where taste is required: how good the
+ * abstractions are, whether the reasoning holds, and never re-litigates
  * requirement coverage, which a rule already answers exactly.
  */
 export class LlmEvaluator implements Evaluator {
@@ -114,8 +114,8 @@ export class LlmEvaluator implements Evaluator {
   /**
    * Models sometimes wrap JSON in prose or a fence despite being asked not to,
    * so the first balanced object in the response is extracted rather than
-   * trusting the whole body. A response that still will not parse — or that
-   * parses into the wrong shape — is treated as retryable: at temperature 0.1
+   * trusting the whole body. A response that still will not parse, or that
+   * parses into the wrong shape: is treated as retryable: at temperature 0.1
    * a re-ask usually succeeds, and if it does not, the pipeline degrades to
    * deterministic-only rather than failing the learner's submission.
    */

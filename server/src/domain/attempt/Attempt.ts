@@ -133,7 +133,7 @@ export class Attempt {
     return this._evaluatedAt;
   }
 
-  /** Autosave. Only a draft is editable — a submitted design is a fixed record. */
+  /** Autosave. Only a draft is editable: a submitted design is a fixed record. */
   saveDraft(submission: Submission, now: Date): void {
     if (this._status !== 'draft') {
       throw new ValidationError(
@@ -184,7 +184,7 @@ export class Attempt {
 
   /**
    * Evaluation broke. Retryable errors go back on the queue while runs remain;
-   * anything else — or the last run — parks the attempt in `failed`, where the
+   * anything else, or the last run, parks the attempt in `failed`, where the
    * learner can re-run it by hand without losing a word of what they wrote.
    */
   failEvaluation(reason: string, retryable: boolean, now: Date): void {

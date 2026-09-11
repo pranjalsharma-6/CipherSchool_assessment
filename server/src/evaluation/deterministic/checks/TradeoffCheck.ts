@@ -13,7 +13,7 @@ const REASONING_SIGNALS = [
  * Did the learner justify the design, or just present it?
  *
  * Deliberately the *only* signal this check reads is length and comparison
- * vocabulary — whether the argument is any good is a judgement the LLM half
+ * vocabulary: whether the argument is any good is a judgement the LLM half
  * makes. This half just refuses to let an unjustified design score full marks,
  * which it can do cheaply and without an API call.
  */
@@ -37,7 +37,7 @@ export class TradeoffCheck implements DesignCheck {
             dimension: this.dimension,
             title: 'No reasoning given for the design',
             detail:
-              'Two or three sentences: what was the main decision, what was the alternative, and why did you pick this one? In an interview this is most of the signal — the classes alone rarely separate candidates.',
+              'Two or three sentences: what was the main decision, what was the alternative, and why did you pick this one? In an interview this is most of the signal: the classes alone rarely separate candidates.',
           },
         ],
       };

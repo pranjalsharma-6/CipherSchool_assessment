@@ -90,7 +90,7 @@ export function HistoryPage() {
         const ordered = [...list].sort((a, b) => a.attemptNumber - b.attemptNumber);
         const scores = ordered.map((a) => a.score).filter((s): s is number => s !== null);
         // Exactly one attempt wears the badge. When several tie on the top
-        // score, the earliest one earned it — later ties did not improve on it.
+        // score, the earliest one earned it: later ties did not improve on it.
         const bestId = ordered.find((a) => a.score !== null && a.score === Math.max(...scores))?.id;
 
         return (
@@ -191,5 +191,5 @@ function Sparkline({ scores }: { scores: number[] }) {
 
 function weakest(attempt: AttemptSummary): string {
   const sorted = [...attempt.dimensionScores].sort((a, b) => a.score - b.score);
-  return sorted[0] ? `${sorted[0].label} ${sorted[0].score}` : '—';
+  return sorted[0] ? `${sorted[0].label} ${sorted[0].score}` : ', ';
 }

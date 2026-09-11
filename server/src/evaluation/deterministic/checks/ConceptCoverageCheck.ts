@@ -14,19 +14,19 @@ type Ownership = 'dedicated' | 'folded' | 'absent';
  * This check is where the platform's answer to "there is more than one valid
  * design" gets expressed precisely. Three outcomes, not two:
  *
- *   - **dedicated** — a type is named for the concept. Full credit.
- *   - **folded**    — the concept appears only inside another type's members or
+ *   - **dedicated**: a type is named for the concept. Full credit.
+ *   - **folded**   : the concept appears only inside another type's members or
  *                     prose, e.g. `calculateFee()` hanging off a god class.
  *                     Half credit and a question, because folding a concept in
  *                     is sometimes exactly right and sometimes the tell of a
- *                     class doing too much — and a rule cannot tell which.
- *   - **absent**    — nothing at all. No credit, and a prompt.
+ *                     class doing too much, and a rule cannot tell which.
+ *   - **absent**   : nothing at all. No credit, and a prompt.
  *
  * Grading `folded` the same as `dedicated` was the earlier behaviour, and it
  * let a design that merely name-drops score as well as one that models the
  * concept. Grading it the same as `absent` would be worse: it would assert that
  * the reference decomposition is the only correct one, which is the exact bias
- * this platform exists to avoid. Half credit says what is actually true — that
+ * this platform exists to avoid. Half credit says what is actually true, that
  * the concept is present but its ownership is unclear from the design alone.
  */
 export class ConceptCoverageCheck implements DesignCheck {
@@ -59,7 +59,7 @@ export class ConceptCoverageCheck implements DesignCheck {
         kind: 'question',
         dimension: this.dimension,
         title: `Nothing detected that owns ${result.concept.name.toLowerCase()}`,
-        detail: `${result.concept.why} A common approach is a dedicated abstraction, but folding it into an existing class can be the right call — if you did that deliberately, say which class owns it and why.`,
+        detail: `${result.concept.why} A common approach is a dedicated abstraction, but folding it into an existing class can be the right call, if you did that deliberately, say which class owns it and why.`,
       });
     }
 
@@ -69,7 +69,7 @@ export class ConceptCoverageCheck implements DesignCheck {
         kind: 'question',
         dimension: this.dimension,
         title: `${result.concept.name} appears folded into another class`,
-        detail: `Your design mentions it (${result.matched.slice(0, 3).join(', ')}) but no type is named for it. ${result.concept.why} That can be the right trade for a small design — worth saying which class owns it and why, because an interviewer will ask.`,
+        detail: `Your design mentions it (${result.matched.slice(0, 3).join(', ')}) but no type is named for it. ${result.concept.why} That can be the right trade for a small design: worth saying which class owns it and why, because an interviewer will ask.`,
       });
     }
 
@@ -111,7 +111,7 @@ function classify(
 
 /**
  * `PricingStrategy` should satisfy the alias `pricing`, and `HourlyPricing`
- * should too — so a type name counts when it contains the term as a word,
+ * should too, so a type name counts when it contains the term as a word,
  * comparing with identifier separators removed.
  */
 function nameMatches(entityName: string, term: string): boolean {

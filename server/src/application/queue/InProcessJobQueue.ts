@@ -10,7 +10,7 @@ export interface InProcessJobQueueOptions {
  *
  * Honest about what it is: jobs live in this process, so a restart loses
  * anything queued. That is an acceptable trade for a practice platform where
- * the submission itself is already durable — a lost job leaves the attempt in
+ * the submission itself is already durable: a lost job leaves the attempt in
  * `queued`, and the learner (or a sweep) can re-run it without losing work.
  * The alternative, a durable broker, is a dependency the MVP does not earn.
  */

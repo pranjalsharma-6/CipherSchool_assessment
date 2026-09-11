@@ -14,8 +14,8 @@ export interface AggregatedScore {
  * The blend per dimension is the rubric's `deterministicShare`, so how much the
  * model is trusted is a property of the *dimension* rather than of the
  * evaluator: requirement coverage barely listens to the model, trade-off
- * reasoning listens only to it. When one side is missing — the usual case being
- * a degraded run with no LLM — that dimension falls back to whichever side
+ * reasoning listens only to it. When one side is missing: the usual case being
+ * a degraded run with no LLM, that dimension falls back to whichever side
  * reported, and the overall score renormalises over the dimensions that were
  * actually assessed, so a degraded run is not silently scored out of a
  * different total.

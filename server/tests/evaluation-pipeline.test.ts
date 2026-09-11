@@ -40,7 +40,7 @@ describe('EvaluationPipeline', () => {
     const strong = await pipeline.run(contextFor(strongParkingLotSubmission()));
     const weak = await pipeline.run(contextFor(weakParkingLotSubmission()));
 
-    // The gap is the assertion that matters — a scoring change that lifts or
+    // The gap is the assertion that matters: a scoring change that lifts or
     // lowers both designs together has not broken anything.
     expect(strong.overallScore - weak.overallScore).toBeGreaterThan(35);
     expect(strong.overallScore).toBeGreaterThan(75);
@@ -50,7 +50,7 @@ describe('EvaluationPipeline', () => {
   it('blames the weak design for the right things', async () => {
     // A number on its own is not feedback. The weak submission wrote no
     // reasoning at all and has no extension point, so those must be the axes
-    // that sink it — otherwise the score is right by accident.
+    // that sink it: otherwise the score is right by accident.
     const pipeline = new EvaluationPipeline(new DeterministicEvaluator(), [], clock);
     const weak = await pipeline.run(contextFor(weakParkingLotSubmission()));
 
@@ -180,13 +180,13 @@ describe('EvaluationPipeline', () => {
 
     // The model said 100 and reported no coverage dimension of its own. The
     // rules own this axis outright, so the blended score must be exactly what
-    // they said — the invariant, rather than a calibrated number that moves
+    // they said: the invariant, rather than a calibrated number that moves
     // whenever a check is retuned.
     expect(coverage?.llmScore).toBeNull();
     expect(coverage?.score).toBe(coverage?.deterministicScore);
 
     const abstraction = result.dimensionScores.find((d) => d.dimension === 'abstraction_quality');
-    // …whereas a dimension the model does own is pulled up by its optimism.
+    // ...whereas a dimension the model does own is pulled up by its optimism.
     expect(abstraction?.llmScore).toBe(100);
     expect(abstraction?.score).toBeGreaterThan(abstraction?.deterministicScore ?? 0);
   });

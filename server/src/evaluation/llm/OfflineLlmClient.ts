@@ -6,8 +6,8 @@ import type { LlmClient, LlmRequest } from './LlmClient.js';
  * This is not a language model and is never presented as one: it reports
  * `modelId` as `offline-simulated-reviewer`, the API returns that id in the
  * evaluation's provenance, and the UI renders the review with an "offline
- * reviewer" badge. It exists so a fresh clone demonstrates the full loop —
- * including the qualitative half of the rubric — without a key, and so the
+ * reviewer" badge. It exists so a fresh clone demonstrates the full loop,
+ * including the qualitative half of the rubric, without a key, and so the
  * whole LLM path stays exercised in development rather than only in production.
  *
  * It reads the prompt this codebase builds (see `prompt.ts`) and answers from
@@ -87,7 +87,7 @@ export class OfflineLlmClient implements LlmClient {
         kind: 'strength',
         dimension: 'abstraction_quality',
         title: 'Each class states what it is for',
-        detail: `${classes.length} types, each with a single stated job — that makes the design reviewable, which is most of what an interviewer is checking.`,
+        detail: `${classes.length} types, each with a single stated job, that makes the design reviewable, which is most of what an interviewer is checking.`,
       });
     }
 
@@ -97,7 +97,7 @@ export class OfflineLlmClient implements LlmClient {
             kind: 'strength',
             dimension: 'tradeoff_reasoning',
             title: 'The design is argued rather than asserted',
-            detail: `${noteWords} words of reasoning accompany the model. Keep making the rejected alternative explicit — that is what turns a diagram into a design discussion.`,
+            detail: `${noteWords} words of reasoning accompany the model. Keep making the rejected alternative explicit, that is what turns a diagram into a design discussion.`,
           }
         : {
             kind: 'gap',

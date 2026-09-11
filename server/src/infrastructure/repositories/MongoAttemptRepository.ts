@@ -8,8 +8,8 @@ import type { AttemptRepository } from '../../application/ports.js';
  * MongoDB adapter for attempts.
  *
  * `submission` and `evaluation` are stored as opaque `Mixed` documents on
- * purpose. They are polymorphic value objects owned by the domain — a new
- * submission format or an extra feedback field should not require a migration —
+ * purpose. They are polymorphic value objects owned by the domain: a new
+ * submission format or an extra feedback field should not require a migration,
  * and nothing queries inside them; the fields that *are* queried (learner,
  * problem, status, timestamps) are typed and indexed.
  */

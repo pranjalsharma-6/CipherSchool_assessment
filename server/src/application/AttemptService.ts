@@ -17,7 +17,7 @@ import type { EvaluationJob } from './EvaluationWorker.js';
  * Drives the practice loop: start → save → submit → (queued) → review → repeat.
  *
  * The service is deliberately thin. It loads aggregates, calls one method on
- * them, saves, and enqueues — every rule about what is legal when lives on
+ * them, saves, and enqueues, every rule about what is legal when lives on
  * {@link Attempt}, so there is no second, contradictory copy of the lifecycle
  * here or in the controllers.
  */
@@ -56,7 +56,7 @@ export class AttemptService {
   /**
    * Hands the design in and returns immediately.
    *
-   * The response is the attempt in `queued` — not a score — because evaluation
+   * The response is the attempt in `queued`, not a score, because evaluation
    * takes seconds and the learner should see their submission land right away.
    * The client polls the attempt until it leaves a pending status.
    */
@@ -93,7 +93,7 @@ export class AttemptService {
   }
 
   /**
-   * The score of the learner's most recent evaluated attempt at this problem —
+   * The score of the learner's most recent evaluated attempt at this problem,
    * used to tell the reviewer what "improved" would mean for this submission.
    */
   async previousScore(

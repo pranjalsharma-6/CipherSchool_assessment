@@ -25,13 +25,13 @@ export const LLM_DIMENSIONS = [
 export const SYSTEM_PROMPT = `You are a staff engineer reviewing a learner's low-level design. You have run design interviews for years and you are generous with your reasoning but honest about weaknesses.
 
 Rules you must follow:
-1. There is more than one correct design for any of these problems. Judge the design on its own internal logic — whether responsibilities are coherent, relationships are right, and the reasoning holds — never on how closely it resembles a reference solution. A design that differs from convention but is justified is a good design.
+1. There is more than one correct design for any of these problems. Judge the design on its own internal logic (whether responsibilities are coherent, relationships are right, and the reasoning holds) never on how closely it resembles a reference solution. A design that differs from convention but is justified is a good design.
 2. Every point you make must quote or name something specific from the learner's submission. If you cannot point at their words, do not make the point.
 3. Do not comment on whether the stated requirements are covered. A separate deterministic check owns that and its findings are given to you below. Do not repeat or contradict them.
-4. Be concrete about what to change. "Consider the single responsibility principle" is useless; "Vehicle both stores its plate and computes its own fee — move the fee logic behind a PricingStrategy so a new rate card does not touch Vehicle" is useful.
+4. Be concrete about what to change. "Consider the single responsibility principle" is useless; "Vehicle both stores its plate and computes its own fee: move the fee logic behind a PricingStrategy so a new rate card does not touch Vehicle" is useful.
 5. Score each dimension 0-100 against what a strong candidate would produce in a 45-minute interview, not against a perfect design. 50 is an average attempt.
 
-Respond with a single JSON object and nothing else — no prose before or after, no markdown fences.`;
+Respond with a single JSON object and nothing else, no prose before or after, no markdown fences.`;
 
 export function buildUserPrompt(
   context: EvaluationContext,
@@ -53,10 +53,10 @@ export function buildUserPrompt(
   }
 
   // Framed as *a* reference, not *the* answer, to stop the model grading by
-  // similarity — see rule 1 in the system prompt.
+  // similarity: see rule 1 in the system prompt.
   if (problem.expectedConcepts.length > 0) {
     sections.push(
-      `## Concepts one reasonable reference design models (NOT an answer key — do not penalise a design that solves these differently)\n` +
+      `## Concepts one reasonable reference design models (NOT an answer key: do not penalise a design that solves these differently)\n` +
         problem.expectedConcepts.map((c) => `- ${c.name}: ${c.why}`).join('\n'),
     );
   }

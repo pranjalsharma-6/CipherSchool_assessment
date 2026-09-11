@@ -20,7 +20,7 @@ const KIND_ORDER: Record<FeedbackItem['kind'], number> = {
 export interface PipelineOptions {
   /**
    * Evaluators that may fail without failing the evaluation. The deterministic
-   * baseline is never optional — if it breaks, that is a bug worth surfacing.
+   * baseline is never optional, if it breaks, that is a bug worth surfacing.
    */
   readonly optional: ReadonlySet<string>;
 }
@@ -31,8 +31,8 @@ export interface PipelineOptions {
  * The composition is the answer to "what happens when evaluation is slow or
  * fails": the baseline is a synchronous rule engine that cannot really fail, and
  * everything slow or fallible is optional on top. A model outage costs the
- * learner the qualitative half of their review — clearly marked, with a re-run
- * button — instead of costing them the submission.
+ * learner the qualitative half of their review: clearly marked, with a re-run
+ * button, instead of costing them the submission.
  */
 export class EvaluationPipeline {
   private readonly aggregator = new ScoreAggregator();
@@ -148,7 +148,7 @@ function dedupe(items: readonly FeedbackItem[]): FeedbackItem[] {
 const normalize = (value: string): string =>
   value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
-/** Used when the model — which normally writes the summary — did not run. */
+/** Used when the model, which normally writes the summary, did not run. */
 function fallbackSummary(
   score: number,
   feedback: readonly FeedbackItem[],
@@ -163,7 +163,7 @@ function fallbackSummary(
   else parts.push('No structural gaps were detected by the rule checks.');
   if (degraded) {
     parts.push(
-      'This review is from the deterministic checks only — the reviewer model was unavailable, so the qualitative half is missing. Re-run the evaluation to get it.',
+      'This review is from the deterministic checks only: the reviewer model was unavailable, so the qualitative half is missing. Re-run the evaluation to get it.',
     );
   }
   return parts.join(' ');

@@ -19,7 +19,7 @@ const CONCURRENCY_SIGNALS = [
 /**
  * Did the design think about what goes wrong?
  *
- * The bulk of the score comes from the problem's **implied requirements** — the
+ * The bulk of the score comes from the problem's **implied requirements**: the
  * cases the brief deliberately does not mention, which a mentor authored
  * alongside the problem: a full lot, two cars racing for the last spot, an
  * equal split of 100 across three people. Those come with per-problem signal
@@ -96,7 +96,7 @@ export class EdgeCaseCheck implements DesignCheck {
         dimension: this.dimension,
         title: 'Concurrent access is not addressed',
         detail:
-          'This problem has a shared resource two requests can reach at the same moment. Name where the contention is and how you resolve it — a lock, an atomic reservation, or an optimistic version check are all defensible; silence is not.',
+          'This problem has a shared resource two requests can reach at the same moment. Name where the contention is and how you resolve it: a lock, an atomic reservation, or an optimistic version check are all defensible; silence is not.',
       });
     }
 

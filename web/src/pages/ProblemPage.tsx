@@ -107,7 +107,7 @@ export function ProblemPage() {
               ))}
             </ul>
             <p className="small faint" style={{ marginTop: 10 }}>
-              These are not graded directly — they are the questions an interviewer would ask
+              These are not graded directly, they are the questions an interviewer would ask
               next. A design that answers them tends to score well on its own.
             </p>
           </Card>
@@ -122,11 +122,11 @@ export function ProblemPage() {
               onClick={start}
               disabled={starting}
             >
-              {starting ? 'Starting…' : attempts.length > 0 ? 'Try again' : 'Start attempt'}
+              {starting ? 'Starting...' : attempts.length > 0 ? 'Try again' : 'Start attempt'}
             </button>
             <p className="small faint" style={{ marginTop: 10 }}>
               You will be asked to name your classes, their responsibilities and how they
-              relate — or you can submit code or a Mermaid class diagram instead.
+              relate, or you can submit code or a Mermaid class diagram instead.
             </p>
           </Card>
 

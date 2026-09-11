@@ -33,8 +33,8 @@ export const DIMENSION_LABELS: Record<RubricDimensionId, string> = {
  * `deterministicShare` is the crux of the evaluation design. Coverage of
  * stated requirements is checkable by machine, so it leans deterministic;
  * whether an abstraction is *well chosen* is a judgement call, so it leans on
- * the LLM. Encoding the split as data — rather than as `if` statements in the
- * evaluator — means re-balancing trust in the model is a config change.
+ * the LLM. Encoding the split as data, rather than as `if` statements in the
+ * evaluator: means re-balancing trust in the model is a config change.
  */
 export interface RubricDimension {
   readonly id: RubricDimensionId;

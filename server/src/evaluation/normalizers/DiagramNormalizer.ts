@@ -14,7 +14,7 @@ import type { SubmissionNormalizer } from './SubmissionNormalizer.js';
  *
  * Mermaid was chosen over an uploaded image because it is text: it diffs
  * between attempts, it renders in the browser with no server-side work, and it
- * carries the two things a picture usually loses — arrow *kind* and
+ * carries the two things a picture usually loses: arrow *kind* and
  * cardinality, which are exactly what the relationships rubric grades.
  */
 export class DiagramNormalizer implements SubmissionNormalizer<'diagram'> {

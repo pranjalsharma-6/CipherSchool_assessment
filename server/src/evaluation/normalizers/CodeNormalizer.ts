@@ -11,8 +11,8 @@ import type { SubmissionNormalizer } from './SubmissionNormalizer.js';
 /**
  * Pulls a design model out of source code with regexes.
  *
- * Deliberately not a real parser. The evaluators need *shape* — which types
- * exist, what extends what, roughly which methods hang off which type — and a
+ * Deliberately not a real parser. The evaluators need *shape*, which types
+ * exist, what extends what, roughly which methods hang off which type, and a
  * per-language AST parser for three languages is a week of work for a sharper
  * answer to a question the LLM half of the pipeline already answers from the
  * raw source. If code submissions turn out to be the popular format, this class
@@ -104,7 +104,7 @@ function referencedTypes(
 ): Array<[string, boolean]> {
   const found = new Map<string, boolean>();
   for (const match of matchAll(body, TYPE_REFERENCE)) {
-    // Alternatives: List<T> | T[] | : T — the first two are collections.
+    // Alternatives: List<T> | T[] | : T: the first two are collections.
     const [, , generic, arrayOf, plain] = match;
     const type = generic ?? arrayOf ?? plain;
     if (!type || type === self || !declared.has(type)) continue;

@@ -1,4 +1,4 @@
-# DesignDojo — an LLD practice platform
+# DesignDojo: an LLD practice platform
 
 Practise Low-Level Design the way you practise algorithms: pick a problem, submit a design, get feedback that points at your actual classes, and try again with the last review still in view.
 
@@ -6,9 +6,9 @@ Built for the CipherSchools 2-day engineering assignment.
 
 | | |
 | --- | --- |
-| **Research note** | [`docs/RESEARCH.md`](docs/RESEARCH.md) — the learner problem, what exists, the gaps, and the product direction |
-| **Design note** | [`docs/DESIGN.md`](docs/DESIGN.md) — MVP, flow, classes, evaluation approach, trade-offs |
-| **AI usage** | [`AI_USAGE.md`](AI_USAGE.md) — five decisions where AI changed the outcome, including the ones I rejected |
+| **Research note** | [`docs/RESEARCH.md`](docs/RESEARCH.md): the learner problem, what exists, the gaps, and the product direction |
+| **Design note** | [`docs/DESIGN.md`](docs/DESIGN.md): MVP, flow, classes, evaluation approach, trade-offs |
+| **AI usage** | [`AI_USAGE.md`](AI_USAGE.md): five decisions where AI changed the outcome, including the ones I rejected |
 
 ---
 
@@ -24,7 +24,7 @@ npm run dev
 - App → **http://localhost:5173**
 - API → http://localhost:4000/api/health
 
-That is the whole setup. With no `MONGODB_URI` the platform stores attempts in memory, and with no `ANTHROPIC_API_KEY` it uses an offline stand-in reviewer — labelled as such in the UI — so the full loop works on a fresh clone.
+That is the whole setup. With no `MONGODB_URI` the platform stores attempts in memory, and with no `ANTHROPIC_API_KEY` it uses an offline stand-in reviewer, labelled as such in the UI, so the full loop works on a fresh clone.
 
 ### With the real reviewer model
 
@@ -56,9 +56,9 @@ npm run typecheck
 | | |
 | --- | --- |
 | ![Catalogue](docs/screenshots/catalogue.png) | ![Workspace](docs/screenshots/workspace.png) |
-| **Catalogue** — four problems, your best score on each | **Workspace** — the brief beside the design, autosaved |
+| **Catalogue**: four problems, your best score on each | **Workspace**: the brief beside the design, autosaved |
 | ![Problem](docs/screenshots/problem.png) | ![Progress](docs/screenshots/progress.png) |
-| **Brief** — requirements, constraints, and how it is scored | **Progress** — every attempt kept and charted |
+| **Brief**: requirements, constraints, and how it is scored | **Progress**: every attempt kept and charted |
 
 ---
 
@@ -72,7 +72,7 @@ Checkable things are decided by reproducible rules; judgement calls go to a lang
 
 | Dimension | Rules | Model | Why |
 | --- | --- | --- | --- |
-| Requirement Coverage | 70% | 30% | A finite authored checklist — mostly a fact |
+| Requirement Coverage | 70% | 30% | A finite authored checklist: mostly a fact |
 | Relationships & Cardinality | 50% | 50% | Presence is a fact; correctness is judgement |
 | Edge Cases & Concurrency | 40% | 60% | Vocabulary is detectable; sufficiency is not |
 | Abstraction & Responsibility | 30% | 70% | Crowded classes are detectable; good taste is not |
@@ -83,13 +83,13 @@ The deterministic half is the platform's floor: dependency-free, single-digit mi
 
 ### 2. Every finding says where it came from
 
-Each item is tagged `rule` or `reviewer` on screen. Requirement coverage shows the learner's own words that matched. A verdict you disagree with is something you can argue with, not something handed down — which matters a lot when the model is occasionally wrong.
+Each item is tagged `rule` or `reviewer` on screen. Requirement coverage shows the learner's own words that matched. A verdict you disagree with is something you can argue with, not something handed down, which matters a lot when the model is occasionally wrong.
 
 ### 3. Rules ask rather than assert
 
-No check says a concept is missing. It says nothing was *detected* that owns it, and asks whether that was deliberate — with a score floor, so departing from the reference costs some marks and never all of them.
+No check says a concept is missing. It says nothing was *detected* that owns it, and asks whether that was deliberate, with a score floor, so departing from the reference costs some marks and never all of them.
 
-Concepts are graded three ways rather than two: **dedicated** (a type is named for it), **folded** (it exists only as a method on another class — half credit and a question), or **absent**. Full credit for folding it in would let name-dropping score as well as modelling; no credit would assert that one decomposition is the only right one.
+Concepts are graded three ways rather than two: **dedicated** (a type is named for it), **folded** (it exists only as a method on another class, half credit and a question), or **absent**. Full credit for folding it in would let name-dropping score as well as modelling; no credit would assert that one decomposition is the only right one.
 
 ---
 
@@ -127,7 +127,7 @@ Dependencies point inward. The domain imports nothing from `infrastructure`, whi
 
 ### Extending it
 
-| To add… | You write | You do not touch |
+| To add... | You write | You do not touch |
 | --- | --- | --- |
 | A submission format | one `SubmissionNormalizer` | any evaluator, service or route |
 | An evaluation approach | one `Evaluator` | the pipeline, worker or lifecycle |
@@ -152,7 +152,7 @@ All routes are under `/api`. The learner is identified by an `x-learner-id` head
 | `POST` | `/attempts/:id/reevaluate` | Re-run a failed evaluation |
 | `GET` | `/attempts?problemId=` | History |
 
-The grading key — requirement signals, reference concepts, pitfalls — never leaves the server; there is a test asserting it.
+The grading key (requirement signals, reference concepts, pitfalls) never leaves the server; there is a test asserting it.
 
 ---
 
@@ -168,7 +168,7 @@ The grading key — requirement signals, reference concepts, pitfalls — never 
 | `normalizers.test.ts` | TypeScript / Java / Python parsing, Mermaid arrow direction and cardinality, unparseable input, unregistered format |
 | `scoring.test.ts` | Rubric normalisation and validation, blending, renormalising over assessed dimensions, clamping, JSON extraction edge cases |
 | `api.test.ts` | End-to-end loop, repeat attempts showing improvement, cross-learner isolation, 422/409/404 paths, running with no reviewer at all |
-| `problem-catalogue.test.ts` | Every seeded problem is completely authored, its rubric covers all six dimensions, its signals are actually matchable, and it separates a strong design from a generic one — a guard that covers each problem added later with no new fixture |
+| `problem-catalogue.test.ts` | Every seeded problem is completely authored, its rubric covers all six dimensions, its signals are actually matchable, and it separates a strong design from a generic one: a guard that covers each problem added later with no new fixture |
 | `signal-matching.test.ts` | Word-boundary and inflection rules, camelCase/snake_case identifier splitting, and that a dedicated type scores above the same concept folded into a god class |
 
 ---

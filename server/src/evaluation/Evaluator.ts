@@ -20,7 +20,7 @@ export interface EvaluationContext {
 
 export interface DimensionAssessment {
   readonly dimension: RubricDimensionId;
-  /** 0–100. */
+  /** 0-100. */
   readonly score: number;
   readonly rationale: string;
 }
@@ -38,7 +38,7 @@ export interface EvaluationContribution {
  * A source of judgement about a design.
  *
  * The pipeline holds a list of these and knows nothing about what is inside
- * them — which is what lets a rule engine and a language model sit side by side,
+ * them, which is what lets a rule engine and a language model sit side by side,
  * and what would let a third kind (a peer-review queue, a static analyser over
  * submitted code) be added without the scoring code changing.
  */

@@ -12,7 +12,7 @@ import type {
  *
  * The MVP has no accounts. A per-browser id kept in localStorage is enough to
  * make history and progress real, and it is deliberately the only place the
- * frontend decides who the learner is — swapping in a real session token later
+ * frontend decides who the learner is: swapping in a real session token later
  * means changing this function and nothing else.
  */
 function learnerId(): string {

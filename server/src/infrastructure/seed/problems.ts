@@ -28,12 +28,12 @@ function parkingLot(): Problem {
 
 Vehicles arrive at an entrance, are assigned a suitable parking spot, and are issued a ticket. On the way out they pay based on how long they stayed and the kind of vehicle they brought, and the spot is released for the next vehicle.
 
-The lot has several floors. Spots come in sizes — motorcycle, compact, large — and a vehicle may only occupy a spot that fits it. Some spots are reserved for electric vehicles and have a charger attached.
+The lot has several floors. Spots come in sizes (motorcycle, compact, large) and a vehicle may only occupy a spot that fits it. Some spots are reserved for electric vehicles and have a charger attached.
 
-Model the classes, their responsibilities, and the relationships between them. You are not being asked for a working implementation, a database schema, or an API — just the design.`,
+Model the classes, their responsibilities, and the relationships between them. You are not being asked for a working implementation, a database schema, or an API: just the design.`,
     constraints: [
       'A single physical lot; you do not need to model a chain of lots.',
-      'Payment is taken at exit. You do not need to integrate a real payment provider — model the boundary.',
+      'Payment is taken at exit. You do not need to integrate a real payment provider: model the boundary.',
       'Assume up to a few thousand spots, so an in-memory index of free spots is reasonable.',
     ],
     requirements: [
@@ -96,7 +96,7 @@ Model the classes, their responsibilities, and the relationships between them. Y
       {
         name: 'Pricing policy',
         aliases: ['pricingstrategy', 'feecalculator', 'ratecard', 'pricingpolicy', 'billingstrategy', 'tariff', 'pricing'],
-        why: 'Rates change constantly — weekends, EV discounts, the first 15 minutes free. If the calculation lives inside Ticket or Vehicle, every rate change edits the core domain.',
+        why: 'Rates change constantly: weekends, EV discounts, the first 15 minutes free. If the calculation lives inside Ticket or Vehicle, every rate change edits the core domain.',
       },
       {
         name: 'Spot allocation',
@@ -106,7 +106,7 @@ Model the classes, their responsibilities, and the relationships between them. Y
       {
         name: 'Ticket',
         aliases: ['ticket', 'parkingticket', 'receipt', 'token'],
-        why: 'The record that ties a vehicle to a spot and a start time — the thing pricing and exit both read.',
+        why: 'The record that ties a vehicle to a spot and a start time: the thing pricing and exit both read.',
       },
       {
         name: 'Spot',
@@ -132,14 +132,14 @@ Model the classes, their responsibilities, and the relationships between them. Y
         summary: 'Pricing decided by a switch over vehicle type',
         triggers: ['switch (vehicletype', 'if vehicletype ==', 'switch(type', 'if (type =='],
         guidance:
-          'Every new rate — EV discount, night tariff, monthly pass — reopens that switch. A PricingStrategy chosen per ticket keeps the change to a new class.',
+          'Every new rate (EV discount, night tariff, monthly pass) reopens that switch. A PricingStrategy chosen per ticket keeps the change to a new class.',
       },
       {
         id: 'god-lot',
         summary: 'One ParkingLot class doing allocation, pricing and payment',
         triggers: ['parkinglot.calculatefee', 'lot.processpayment', 'parkinglot.pay'],
         guidance:
-          'ParkingLot is a good aggregate root but a poor place to put every rule. Let it coordinate — hold the floors, delegate allocation and pricing to collaborators.',
+          'ParkingLot is a good aggregate root but a poor place to put every rule. Let it coordinate: hold the floors, delegate allocation and pricing to collaborators.',
       },
     ],
     discussionPrompts: [
@@ -176,7 +176,7 @@ The machine tracks its inventory per slot and the coins it holds, since it can o
 
 Model the classes, their responsibilities, and how the machine moves between its states.`,
     constraints: [
-      'Physical coins and notes only — no card reader.',
+      'Physical coins and notes only, no card reader.',
       'A single machine; you do not need a fleet or a restocking service.',
       'Change is made from the coins currently in the machine.',
     ],
@@ -249,7 +249,7 @@ Model the classes, their responsibilities, and how the machine moves between its
       {
         name: 'Change strategy',
         aliases: ['changestrategy', 'changemaker', 'coinchanger', 'greedy', 'makechange'],
-        why: 'Choosing which coins to return is an algorithm that can be swapped — greedy works for most currencies but not all.',
+        why: 'Choosing which coins to return is an algorithm that can be swapped: greedy works for most currencies but not all.',
       },
     ],
     pitfalls: [
@@ -258,7 +258,7 @@ Model the classes, their responsibilities, and how the machine moves between its
         summary: 'Machine state tracked with boolean flags',
         triggers: ['ispaid', 'isdispensing', 'hasmoney: boolean', 'boolean isselected'],
         guidance:
-          'Three booleans describe eight states, several of them nonsense (paid and idle at once). One state object — or at minimum one enum with explicit transitions — makes the impossible ones unrepresentable.',
+          'Three booleans describe eight states, several of them nonsense (paid and idle at once). One state object, or at minimum one enum with explicit transitions, makes the impossible ones unrepresentable.',
       },
       {
         id: 'change-in-machine',
@@ -293,7 +293,7 @@ function elevator(): Problem {
     difficulty: 'hard',
     estimatedMinutes: 55,
     summary:
-      'Where most candidates lose the thread. The hard part is not the lift — it is separating the request, the scheduler and the car.',
+      'Where most candidates lose the thread. The hard part is not the lift, it is separating the request, the scheduler and the car.',
     statement: `Design the object model for the elevator system of an office building.
 
 The building has several floors and several elevator cars. A person on a floor presses up or down; a person inside a car presses a destination floor. The system decides which car serves which request and in what order, then the cars move, stop and open their doors.
@@ -304,7 +304,7 @@ Model the classes, their responsibilities, and the relationships between them. B
     constraints: [
       'A single building; you do not need to coordinate across buildings.',
       'Assume the mechanical layer (motor, doors) is available behind a simple interface.',
-      'Scheduling can be a reasonable heuristic — you are not being asked for an optimal algorithm.',
+      'Scheduling can be a reasonable heuristic, you are not being asked for an optimal algorithm.',
     ],
     requirements: [
       {
@@ -366,17 +366,17 @@ Model the classes, their responsibilities, and the relationships between them. B
       {
         name: 'Request',
         aliases: ['request', 'call', 'hallcall', 'carcall', 'elevatorrequest'],
-        why: 'A request has an origin, a direction and a lifecycle of its own — it is created before any car is chosen, and outlives a car going out of service.',
+        why: 'A request has an origin, a direction and a lifecycle of its own, it is created before any car is chosen, and outlives a car going out of service.',
       },
       {
         name: 'Dispatch strategy',
         aliases: ['dispatchstrategy', 'scheduler', 'schedulingstrategy', 'dispatcher', 'selectionstrategy', 'nearestcar', 'scan'],
-        why: 'Which car serves a call is the decision the whole system turns on, and buildings tune it — nearest car, least busy, zoned by floor band.',
+        why: 'Which car serves a call is the decision the whole system turns on, and buildings tune it: nearest car, least busy, zoned by floor band.',
       },
       {
         name: 'Elevator car',
         aliases: ['car', 'elevatorcar', 'elevator', 'cabin', 'lift'],
-        why: 'The moving resource: it owns its position, direction, door state and pending stops — and nothing else should be reaching in to set them.',
+        why: 'The moving resource: it owns its position, direction, door state and pending stops, and nothing else should be reaching in to set them.',
       },
       {
         name: 'Car state',
@@ -409,12 +409,12 @@ Model the classes, their responsibilities, and the relationships between them. B
         summary: 'Serving stops strictly first-come-first-served',
         triggers: ['fifo', 'first come first serve', 'fcfs', 'first-in first-out'],
         guidance:
-          'A car that passes floor 5 on its way to 9 and then comes back for 5 is a bug people can feel. Sweeping in one direction (the LOOK/SCAN family) is the usual answer — say which you chose and why.',
+          'A car that passes floor 5 on its way to 9 and then comes back for 5 is a bug people can feel. Sweeping in one direction (the LOOK/SCAN family) is the usual answer: say which you chose and why.',
       },
     ],
     discussionPrompts: [
       'A car is assigned a hall call, then goes into maintenance. Which object notices, and what happens to the call?',
-      'Where does the decision "serve floor 5 on the way up" live — the scheduler or the car?',
+      'Where does the decision "serve floor 5 on the way up" live: the scheduler or the car?',
       'The building wants zoned dispatch during the morning rush. What changes?',
     ],
     tags: ['scheduling', 'state', 'concurrency', 'strategy'],
@@ -437,7 +437,7 @@ function expenseSplitter(): Problem {
     difficulty: 'medium',
     estimatedMinutes: 45,
     summary:
-      'A Splitwise-style ledger. Tests whether you model money as a balance you mutate or as a history you derive from — the answer matters more than it first appears.',
+      'A Splitwise-style ledger. Tests whether you model money as a balance you mutate or as a history you derive from: the answer matters more than it first appears.',
     statement: `Design the object model for a shared-expense tracker.
 
 Users belong to groups. Any member can record an expense they paid for, split among some or all of the group. Splits can be equal, by exact amount, by percentage, or by share units.
@@ -447,7 +447,7 @@ At any point a user can see what they owe and what they are owed, both overall a
 Model the classes, their responsibilities, and how balances are derived. Be explicit about how money is represented.`,
     constraints: [
       'Single currency is fine, but say what would change for multi-currency.',
-      'No real payment integration — settlements are recorded, not executed.',
+      'No real payment integration: settlements are recorded, not executed.',
       'Balances must always reconcile: the sum of everyone\'s position in a group is zero.',
     ],
     requirements: [
@@ -514,7 +514,7 @@ Model the classes, their responsibilities, and how balances are derived. Be expl
       {
         name: 'Ledger entry',
         aliases: ['ledger', 'transaction', 'entry', 'balanceentry', 'journal', 'expenseshare'],
-        why: 'Deriving balances from an immutable history — rather than mutating a running total — is what lets an expense be edited or deleted without corrupting everyone\'s position.',
+        why: 'Deriving balances from an immutable history, rather than mutating a running total, is what lets an expense be edited or deleted without corrupting everyone\'s position.',
       },
       {
         name: 'Settlement',

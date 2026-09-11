@@ -8,7 +8,7 @@ export type FeedbackKind = 'strength' | 'gap' | 'suggestion' | 'pitfall' | 'ques
 /**
  * One piece of feedback.
  *
- * `source` is not a debugging field — it is on screen. A learner who is told
+ * `source` is not a debugging field, it is on screen. A learner who is told
  * "nothing owns pricing" should be able to see that a rule found that, while
  * "your Vehicle class is doing two jobs" came from a model and is an opinion.
  * Labelling which is which is what keeps the feedback trustworthy when the
@@ -37,7 +37,7 @@ export interface RequirementCoverage {
 export interface DimensionScore {
   readonly dimension: RubricDimensionId;
   readonly label: string;
-  /** 0–100, the blend actually used for the overall score. */
+  /** 0-100, the blend actually used for the overall score. */
   readonly score: number;
   readonly weight: number;
   readonly deterministicScore: number | null;
@@ -49,7 +49,7 @@ export interface DimensionScore {
  * The result of evaluating one attempt.
  *
  * `degraded` matters: when the LLM is unavailable the platform still returns a
- * real, useful, deterministic result rather than an error page — and says so,
+ * real, useful, deterministic result rather than an error page, and says so,
  * so the learner knows the qualitative half is missing and can re-run it.
  */
 export interface Evaluation {
@@ -64,7 +64,7 @@ export interface Evaluation {
   readonly generatedAt: Date;
 }
 
-/** Provenance for one evaluator in the pipeline — surfaced in the UI. */
+/** Provenance for one evaluator in the pipeline: surfaced in the UI. */
 export interface EvaluatorRun {
   readonly name: string;
   readonly version: string;

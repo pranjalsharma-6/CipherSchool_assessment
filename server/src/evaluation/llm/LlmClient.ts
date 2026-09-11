@@ -2,8 +2,8 @@
  * The narrow slice of "a language model" this platform depends on.
  *
  * One method, plain strings in and out. Nothing above this line knows about
- * Anthropic, tokens, or SDK types, so swapping provider — or dropping in the
- * offline stub used by the tests and by a fresh checkout with no API key — is a
+ * Anthropic, tokens, or SDK types, so swapping provider, or dropping in the
+ * offline stub used by the tests and by a fresh checkout with no API key: is a
  * one-line change in the container.
  */
 export interface LlmClient {

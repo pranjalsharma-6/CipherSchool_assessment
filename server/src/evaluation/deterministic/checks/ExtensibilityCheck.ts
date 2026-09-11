@@ -16,9 +16,9 @@ const BRANCHING_SIGNALS = ['switch (', 'switch(', 'if type ==', 'instanceof', 'e
  * Would this design survive the next requirement?
  *
  * The heuristic: extensible designs name a seam. An abstract type, an interface,
- * or a `…Strategy`/`…Policy` collaborator means new behaviour arrives as a new
+ * or a `...Strategy`/`...Policy` collaborator means new behaviour arrives as a new
  * class; a switch over an enum means it arrives as an edit to existing code. The
- * check rewards the former and asks about the latter rather than forbidding it —
+ * check rewards the former and asks about the latter rather than forbidding it,
  * a two-case switch is often the right, simpler answer.
  */
 export class ExtensibilityCheck implements DesignCheck {
@@ -66,7 +66,7 @@ export class ExtensibilityCheck implements DesignCheck {
         dimension: this.dimension,
         title: 'No extension point in the design',
         detail:
-          'Pick the rule most likely to change — pricing, allocation, notification — and ask what it would take to add a second version of it. If the answer is "edit an existing class", that rule wants to be an interface.',
+          'Pick the rule most likely to change (pricing, allocation, notification) and ask what it would take to add a second version of it. If the answer is "edit an existing class", that rule wants to be an interface.',
       });
     }
 
@@ -78,7 +78,7 @@ export class ExtensibilityCheck implements DesignCheck {
         dimension: this.dimension,
         title: 'Behaviour appears to branch on a type value',
         detail:
-          'Branching on a kind/enum works until the third variant. If you expect more, the branches are usually the methods of a small family of classes. If the set really is closed, say so — that is a legitimate trade-off.',
+          'Branching on a kind/enum works until the third variant. If you expect more, the branches are usually the methods of a small family of classes. If the set really is closed, say so, that is a legitimate trade-off.',
       });
     }
 

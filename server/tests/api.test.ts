@@ -133,7 +133,7 @@ describe('practice loop end to end', () => {
     expect(history.body.attempts).toHaveLength(3);
     const [newest, , oldest] = history.body.attempts;
     expect(newest.attemptNumber).toBe(3);
-    // Improvement is visible across attempts — the point of the product.
+    // Improvement is visible across attempts: the point of the product.
     expect(newest.score).toBeGreaterThan(oldest.score);
   });
 
@@ -181,7 +181,7 @@ describe('failure and edge cases', () => {
     expect(response.body.error.code).toBe('VALIDATION_FAILED');
     expect(response.body.error.details.length).toBeGreaterThan(0);
 
-    // Still editable — nothing the learner typed is lost.
+    // Still editable: nothing the learner typed is lost.
     const after = await request(app)
       .get(`/api/attempts/${started.body.attempt.id}`)
       .set('x-learner-id', LEARNER);

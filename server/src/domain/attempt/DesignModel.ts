@@ -5,8 +5,8 @@
  * format without touching the evaluators. A structured form, a Mermaid class
  * diagram and a TypeScript file are three different things to a learner, but
  * once normalised they are all "some classes, some relationships, some
- * operations, and some prose about why". Evaluators depend on this — never on
- * the raw submission — so adding a format is one new normaliser and zero
+ * operations, and some prose about why". Evaluators depend on this, never on
+ * the raw submission, so adding a format is one new normaliser and zero
  * changes to scoring.
  */
 export interface DesignModel {
@@ -38,7 +38,7 @@ export interface DesignRelationship {
   readonly from: string;
   readonly to: string;
   readonly kind: RelationshipKind;
-  /** e.g. "1..*" — free text, since learners write cardinality many ways. */
+  /** e.g. "1..*": free text, since learners write cardinality many ways. */
   readonly cardinality?: string;
   readonly note?: string;
 }
@@ -72,8 +72,8 @@ export function buildSearchText(
   for (const o of model.operations) {
     parts.push(o.name, o.owner ?? '', o.description);
   }
-  // Identifiers carry real signal — `onCarUnavailable` says something about the
-  // design — but lower-cased they become one blob that word-boundary matching
+  // Identifiers carry real signal: `onCarUnavailable` says something about the
+  // design, but lower-cased they become one blob that word-boundary matching
   // cannot see into. So the text carries the design twice: once verbatim, so
   // concatenated aliases like `pricingstrategy` still match, and once with
   // identifiers split into words, so `unavailable` matches too. Both forms are

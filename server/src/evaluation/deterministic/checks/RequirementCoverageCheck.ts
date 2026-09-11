@@ -50,7 +50,7 @@ export class RequirementCoverageCheck implements DesignCheck {
         detail:
           `Nothing in your classes, relationships or notes appears to handle:\n` +
           missedStated.map((c) => `• ${c.text}`).join('\n') +
-          `\n\nIf you did handle these, name the responsible class explicitly — an ` +
+          `\n\nIf you did handle these, name the responsible class explicitly: an ` +
           `interviewer reads the design, not your intent.`,
       });
     }
@@ -62,7 +62,7 @@ export class RequirementCoverageCheck implements DesignCheck {
         kind: 'question' as const,
         dimension: this.dimension,
         title: 'Unstated requirement worth considering',
-        detail: `${missed.text} This was not in the brief — good designs surface it anyway.`,
+        detail: `${missed.text} This was not in the brief: good designs surface it anyway.`,
         requirementId: missed.requirementId,
       });
     }

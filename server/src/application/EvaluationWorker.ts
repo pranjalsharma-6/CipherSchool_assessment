@@ -19,11 +19,11 @@ export interface EvaluationWorkerOptions {
  * Consumes evaluation jobs and moves the attempt through its lifecycle.
  *
  * The failure story lives here, and it has three levels:
- *   1. an evaluator that fails but is optional — the pipeline degrades and the
+ *   1. an evaluator that fails but is optional: the pipeline degrades and the
  *      attempt still completes with a deterministic-only review;
- *   2. a retryable failure of the whole run — re-queued with exponential
+ *   2. a retryable failure of the whole run: re-queued with exponential
  *      backoff, up to the attempt's run limit;
- *   3. anything else, or the last retry — the attempt lands in `failed` with
+ *   3. anything else, or the last retry: the attempt lands in `failed` with
  *      the reason kept, and the learner can re-run it from the UI.
  *
  * At no point is the learner's submission lost or the error swallowed.
@@ -97,7 +97,7 @@ export class EvaluationWorker {
       await this.attempts.save(attempt);
 
       if (attempt.status === 'queued') {
-        // 1s, 2s, 4s — enough to ride out a rate limit without making the
+        // 1s, 2s, 4s, enough to ride out a rate limit without making the
         // learner watch a spinner for a minute.
         const delay = this.retryBaseMs * 2 ** (attempt.evaluationRuns - 1);
         this.log('evaluation.retrying', { attemptId: attempt.id, delay, reason: message });

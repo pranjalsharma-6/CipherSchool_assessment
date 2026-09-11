@@ -5,8 +5,8 @@ import { LlmUnavailableError, type LlmClient, type LlmRequest } from './LlmClien
  * Anthropic-backed {@link LlmClient}.
  *
  * Every failure mode the SDK can produce is folded into either
- * {@link LlmUnavailableError} (retryable — rate limits, overloads, timeouts,
- * network) or a plain Error (not retryable — a bad request or a bad key, where
+ * {@link LlmUnavailableError} (retryable: rate limits, overloads, timeouts,
+ * network) or a plain Error (not retryable: a bad request or a bad key, where
  * retrying just burns the learner's time). The pipeline above only has to
  * understand those two cases.
  */

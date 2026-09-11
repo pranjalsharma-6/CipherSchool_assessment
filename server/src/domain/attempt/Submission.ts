@@ -6,8 +6,8 @@ import { ValidationError } from '../shared/errors.js';
  * The MVP takes the position that free prose is the wrong primary format: it
  * is pleasant to write, impossible to give precise feedback on, and it lets a
  * learner skip the parts of LLD that are actually hard (naming owners, fixing
- * cardinality). So the primary format is *structured* — you must name your
- * classes and say what each one is responsible for — with code and diagram
+ * cardinality). So the primary format is *structured*, you must name your
+ * classes and say what each one is responsible for, with code and diagram
  * accepted as alternatives for learners who think better that way.
  *
  * A discriminated union rather than a class hierarchy: submissions are inert
@@ -25,7 +25,7 @@ export interface StructuredSubmission {
   readonly entities: readonly StructuredEntity[];
   readonly relationships: readonly StructuredRelationship[];
   readonly operations: readonly StructuredOperation[];
-  /** Why this shape and not another — the part interviewers actually probe. */
+  /** Why this shape and not another: the part interviewers actually probe. */
   readonly tradeoffs: string;
   readonly assumptions: string;
 }
